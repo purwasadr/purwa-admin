@@ -61,26 +61,10 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Projects</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href={'/dashboard'}>
-                    <ChartAreaIcon />
-                    <span>Dashboard</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Inventori</SidebarGroupLabel>
           <SidebarMenu>
-            {inventoryNav.map((item) => (
+            {inventoryNav.map((item) => item.items ? (
               <Collapsible
-                key={item.title}
+                key={item.url}
                 asChild
                 defaultOpen={true}
                 className="group/collapsible"
@@ -98,9 +82,9 @@ export function AppSidebar() {
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
-                            <a href={subItem.url}>
+                            <Link href={subItem.url}>
                               <span>{subItem.title}</span>
-                            </a>
+                            </Link>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}
@@ -108,6 +92,15 @@ export function AppSidebar() {
                   </CollapsibleContent>
                 </SidebarMenuItem>
               </Collapsible>
+            ) : (
+              <SidebarMenuItem key={item.url}>
+                <SidebarMenuButton asChild>
+                  <Link href={item.url}>
+                    <ChartAreaIcon />
+                    <span>{item.title}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             ))}
           </SidebarMenu>
         </SidebarGroup>
